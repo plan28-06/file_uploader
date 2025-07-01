@@ -1,6 +1,7 @@
 const path = require("node:path");
-const { Pool } = require("pg");
+const db = require("./db/queries");
 const express = require("express");
+const bcrypt = require("bcrypt");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
@@ -25,8 +26,14 @@ app.get("/sign-up", (req, res, next) => {
     res.render("signup");
 });
 
-app.post("/sign-up", (req, res, next) => {
-    res.redirect("/log-in");
+app.post("/sign-up", async (req, res, next) => {
+    try {
+        const hashedpassword = await bcrypt.hash(req.body.password, 10);
+        await db.createUser(req.username, hashedpassword);
+        res.redirect("log-in");
+    } catch (err) {
+        return next(err);
+    }
 });
 
 app.use((req, res) => {

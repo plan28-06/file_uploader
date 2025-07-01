@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -15,12 +14,10 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  username  String   @unique
-  password  String? // made optional for O-Auth
-  createdAt DateTime @default(now())
-  provider String @default("local") // local or google or github
+  id         String   @id @default(uuid())
+  username   String   @unique
+  password   String? // made optional for O-Auth
+  createdAt  DateTime @default(now())
+  provider   String   @default("local") // local or google or github
   providerID String? // For O-Auth
 }
-
-
