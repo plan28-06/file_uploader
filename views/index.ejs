@@ -11,44 +11,7 @@
     <body>
         <%- include("./partials/header.ejs") %>
         <main>
-            <div class="form">
-                <h1>Log In</h1>
-                <form action="/log-in" method="post">
-                    <div class="formusername">
-                        <label for="username">Username *</label>
-                        <input type="text" name="username" required />
-                    </div>
-                    <div class="formpassword">
-                        <label for="password">Password *</label>
-                        <input type="password" name="password" required />
-                    </div>
-                    <button class="main-button-2">Log In</button>
-                    <p>
-                        Don't have an account?
-                        <a href="/sign-up" class="link">Sign up</a>
-                    </p>
-                    <div class="oauth-buttons">
-                        <a href="/auth/google" class="googleanchor">
-                            <button class="google">
-                                <img
-                                    src="https://yt3.googleusercontent.com/2eI1TjX447QZFDe6R32K0V2mjbVMKT5mIfQR-wK5bAsxttS_7qzUDS1ojoSKeSP0NuWd6sl7qQ=s900-c-k-c0x00ffffff-no-rj"
-                                    width="30px"
-                                    style="margin-right: 10px" />
-                                <p class="googletext">Google</p>
-                            </button>
-                        </a>
-                        <a href="/auth/github" class="githubanchor">
-                            <button class="github">
-                                <img
-                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbqj9Ii13d6hx5a9kyLnC5A8A96LDSaSZv_w&s"
-                                    width="30px"
-                                    style="margin-right: 10px" />
-                                <p class="githubtext">Github</p>
-                            </button>
-                        </a>
-                    </div>
-                </form>
-            </div>
+            <h1 style="color: white;">HOME</h1>
         </main>
     </body>
 </html>
