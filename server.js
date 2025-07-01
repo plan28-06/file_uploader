@@ -13,7 +13,7 @@ app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
-app.get("/", (req, res,next) => {
+app.get("/", (req, res, next) => {
     res.render("index");
 });
 
@@ -21,12 +21,15 @@ app.get("/log-in", (req, res, next) => {
     res.render("login");
 });
 
-
-app.get("/sign-up", (req, res,next) => {
+app.get("/sign-up", (req, res, next) => {
     res.render("signup");
 });
 
-app.post("/sign-up",(req,res,next)=>{
-    res.redirect("/log-in")
-})
+app.post("/sign-up", (req, res, next) => {
+    res.redirect("/log-in");
+});
+
+app.use((req, res) => {
+    res.render("404");
+});
 app.listen(3000, () => console.log("app listening on port 3000!"));
