@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/plan28-06/file_uploader#readme",
   "dependencies": {
+    "@prisma/client": "^6.10.1",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "express-session": "^1.18.1",
