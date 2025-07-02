@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const flash = require("connect-flash");
 const passport = require("passport");
 const session = require("express-session");
+const { error } = require("node:console");
 require("./passport.js");
 
 const app = express();
@@ -60,7 +61,8 @@ app.get("/log-in", (req, res) => {
 });
 
 app.get("/sign-up", (req, res, next) => {
-    res.render("signup");
+    const error = req.flash("error");
+    res.render("signup", { user: req.user, error: error });
 });
 
 app.post(
@@ -87,10 +89,12 @@ app.post("/sign-up", async (req, res, next) => {
         await db.createUser(req.body.username, hashedpassword);
         res.redirect("/log-in");
     } catch (err) {
-        if (err.code === "23505") {
-            return res.status(400).send("Username already exists");
+        if (err.code === "P2002") {
+            req.flash("error", "Username already exists");
+            res.redirect("/sign-up");
         }
-        res.status(500).send(`Error creating user: ${err.message}`);
+        req.flash("error", "Username already exists");
+        res.redirect("/sign-up");
     }
 });
 
