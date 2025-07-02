@@ -13,6 +13,9 @@
         <main>
             <div class="form">
                 <h1>Log In</h1>
+                <% if (error && error.length > 0) { %>
+                <p style="color: red"><%= error[0] %></p>
+                <% } %>
                 <form action="/log-in" method="post">
                     <div class="formusername">
                         <label for="username">Username *</label>

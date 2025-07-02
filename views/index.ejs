@@ -11,7 +11,11 @@
     <body>
         <%- include("./partials/header.ejs") %>
         <main>
-            <h1 style="color: white;">HOME</h1>
+            <%if (user){%>
+            <h1 style="color: white"><%-user.username%></h1>
+            <%}else{%>
+            <h1 style="color: white">HOME</h1>
+            <%}%>
         </main>
     </body>
 </html>
