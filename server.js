@@ -33,11 +33,25 @@ app.get(
 
 app.get(
     "/auth/google/callback",
-    passport.authenticate("google", { failureRedirect: "/login" }),
-    function (req, res) {
-        // Successful authentication, redirect home.
-        res.redirect("/");
-    }
+    passport.authenticate("google", {
+        failureRedirect: "/login",
+        failureFlash: true,
+        successRedirect: "/",
+    })
+);
+
+app.get(
+    "/auth/github",
+    passport.authenticate("github", { scope: ["user:email"] })
+);
+
+app.get(
+    "/auth/github/callback",
+    passport.authenticate("github", {
+        failureRedirect: "/log-in",
+        failureFlash: true,
+        successRedirect: "/",
+    })
 );
 
 app.get("/log-in", (req, res) => {

@@ -19,5 +19,5 @@ model User {
   password   String? // made optional for O-Auth
   createdAt  DateTime @default(now())
   provider   String   @default("local") // local or google or github
-  providerID String? // For O-Auth
+  providerID String? @unique// For O-Auth
 }

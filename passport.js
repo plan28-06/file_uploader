@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const GitHubStrategy = require("passport-github2").Strategy;
 
 passport.use(
     new LocalStrategy(async (username, password, done) => {
@@ -39,7 +40,6 @@ passport.deserializeUser(async (id, done) => {
     }
 });
 
-
 passport.use(
     new GoogleStrategy(
         {
@@ -58,6 +58,35 @@ passport.use(
                 },
             });
             return done(null, user);
+        }
+    )
+);
+
+passport.use(
+    new GitHubStrategy(
+        {
+            clientID: process.env.GITHUB_CLIENT_ID,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET,
+            callbackURL: "/auth/github/callback",
+        },
+        async (accessToken, refreshToken, profile, done) => {
+            try {
+                const user = await prisma.user.upsert({
+                    where: { providerID: profile.id },
+                    update: {},
+                    create: {
+                        username:
+                            profile.username ||
+                            profile.displayName ||
+                            "Unknown",
+                        provider: "github",
+                        providerID: profile.id,
+                    },
+                });
+                return done(null, user);
+            } catch (err) {
+                return done(err);
+            }
         }
     )
 );

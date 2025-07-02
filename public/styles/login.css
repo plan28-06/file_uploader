@@ -65,7 +65,7 @@ form > p {
     text-align: center;
 }
 
-.oauth-buttons{
+.oauth-buttons {
     margin-top: 20px;
 }
 .link {
@@ -75,13 +75,14 @@ form > p {
     border-bottom: 2px solid white;
 }
 
-.oauth-buttons{
+.oauth-buttons {
     display: flex;
     flex-direction: row;
     gap: 15px;
     justify-content: space-evenly;
 }
-.google,.github{
+.google,
+.github {
     background-color: white;
     width: inherit;
     height: inherit;
@@ -99,13 +100,21 @@ form > p {
     align-items: center;
 }
 
-.googletext,.githubtext {
+.googletext,
+.githubtext {
     text-decoration: none;
     font-weight: 600;
 }
 
-.googleanchor,.githubanchor{
+.googleanchor,
+.githubanchor {
     text-decoration: none;
     display: block;
     width: 125px !important;
+}
+
+.google:hover,.github:hover {
+    cursor: pointer;
+    color: #939191;
+    border-color:green ;
 }
