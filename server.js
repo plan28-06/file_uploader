@@ -25,6 +25,21 @@ app.get("/", (req, res, next) => {
     }
 });
 
+// O-Auth
+app.get(
+    "/auth/google",
+    passport.authenticate("google", { scope: ["profile"] })
+);
+
+app.get(
+    "/auth/google/callback",
+    passport.authenticate("google", { failureRedirect: "/login" }),
+    function (req, res) {
+        // Successful authentication, redirect home.
+        res.redirect("/");
+    }
+);
+
 app.get("/log-in", (req, res) => {
     const error = req.flash("error");
     res.render("login", { user: req.user, error: error });

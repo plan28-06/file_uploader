@@ -2,6 +2,7 @@ const prisma = require("./db/prisma");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 passport.use(
     new LocalStrategy(async (username, password, done) => {
@@ -37,3 +38,26 @@ passport.deserializeUser(async (id, done) => {
         done(err);
     }
 });
+
+
+passport.use(
+    new GoogleStrategy(
+        {
+            clientID: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            callbackURL: "/auth/google/callback",
+        },
+        async (accessToken, refreshToken, profile, done) => {
+            const user = await prisma.user.upsert({
+                where: { providerID: profile.id },
+                update: {},
+                create: {
+                    username: profile.displayName,
+                    provider: "google",
+                    providerID: profile.id,
+                },
+            });
+            return done(null, user);
+        }
+    )
+);
