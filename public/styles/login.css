@@ -65,6 +65,9 @@ form > p {
     text-align: center;
 }
 
+.oauth-buttons{
+    margin-top: 20px;
+}
 .link {
     text-decoration: none;
     white-space: nowrap;
