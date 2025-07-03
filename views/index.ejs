@@ -3,14 +3,61 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" type="favicon" href="/folder.png" />
+        <link rel="icon" type="favicon" href="/folder.svg" />
         <link rel="stylesheet" href="/styles/index.css" />
         <title>File Uploader</title>
     </head>
+    <script>
+        window.onclick = (e) => {
+            const modal = document.getElementById("folderModal");
+            if (e.target === modal) modal.style.display = "none";
+        };
+    </script>
     <body>
         <%- include("./partials/homenavbar.ejs") %>
         <main>
-            
+            <aside>
+                <div class="buttons">
+                    <button
+                        class="newfolder"
+                        onclick="document.getElementById('folderModal').style.display = 'flex'">
+                        <img
+                            src="/add-folder.png"
+                            style="width: 20px; height: 20px" />
+                        <span>New Folder</span>
+                    </button>
+                    <a href="/newfile">
+                        <button class="newfile">
+                            <img
+                                src="/new-file.png"
+                                style="width: 20px; height: 20px" />
+                            <span>New File</span>
+                        </button>
+                    </a>
+                </div>
+            </aside>
+            <div class="center">
+                <div id="folderModal" class="modal">
+                    <div class="modal-content">
+                        <h2>Create New Folder</h2>
+                        <form action="/create-folder" method="POST">
+                            <div class="label">
+                                <label for="foldername">Name</label>
+                            </div>
+                            <input
+                                type="text"
+                                name="folderName"
+                                placeholder="Folder name"
+                                required />
+                            <div class="createbutton">
+                                <a href="/createfolder">
+                                    <button type="submit">Create</button>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </main>
     </body>
 </html>
