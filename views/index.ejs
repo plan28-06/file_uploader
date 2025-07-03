@@ -4,17 +4,14 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" type="favicon" href="/folder.png" />
-        <link rel="stylesheet" href="/styles/header.css" />
-        <link rel="stylesheet" href="/styles/login.css" />
+        <link rel="stylesheet" href="/styles/index.css" />
         <title>File Uploader</title>
     </head>
     <body>
-        <%- include("./partials/header.ejs") %>
+        <%- include("./partials/homenavbar.ejs") %>
         <main>
             <%if (user){%>
             <h1 style="color: white"><%-user.username%></h1>
-            <%}else{%>
-            <h1 style="color: white">HOME</h1>
             <%}%>
         </main>
     </body>

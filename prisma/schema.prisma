@@ -21,3 +21,14 @@ model User {
   provider   String   @default("local") // local or google or github
   providerID String? @unique// For O-Auth
 }
+
+
+model Node {
+  id        String   @id @default(uuid())
+  name      String
+  isFolder  Boolean
+  url       String?     // for files only (cloudinary url)
+  parentId  String?     // null = root
+  userId    String
+  createdAt DateTime @default(now())
+}
