@@ -98,7 +98,7 @@ li > a {
 main {
     flex-grow: 1;
     display: grid;
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: 200px 1fr;
 }
 
 .buttons {
@@ -163,17 +163,17 @@ a {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-form{
+form {
     padding-top: 30px;
-    padding-bottom:15px ;
+    padding-bottom: 15px;
 }
 
-h2{
+h2 {
     font-size: 25px;
     font-weight: 4 00;
 }
 
-input{
+input {
     background-color: #1a1a1e;
     padding: 0px 20px;
     border: none;
@@ -182,15 +182,15 @@ input{
     color: white;
 }
 
-.label{
+.label {
     padding-bottom: 10px;
 }
 
-.createbutton{
+.createbutton {
     padding-top: 15px;
 }
 
-.createbutton button{
+.createbutton button {
     width: 100px;
     height: 20px;
     background-color: hsl(203, 78%, 50%);
@@ -200,10 +200,18 @@ input{
     display: flex;
     justify-content: center;
     align-items: center;
-    color:white;
+    color: white;
 }
 
-.createbutton button:hover{
+.createbutton button:hover {
     background-color: hsl(203, 78%, 33%);
     cursor: pointer;
+}
+
+aside {
+    border-right: 2px solid rgb(194, 190, 190);
+}
+
+header {
+    border-bottom: 2px solid rgb(194, 190, 190);
 }
