@@ -30,9 +30,16 @@ html {
     color: hsl(203, 78%, 44%);
 }
 
+nav{
+    display: flex;
+    flex-grow: 5;
+    justify-content: flex-end;
+}
 nav > ul {
     list-style: none;
     display: flex;
+    position: relative;
+    justify-content: flex-end;
     align-items: center;
     padding: 0;
     gap: 20px;
@@ -46,7 +53,7 @@ header {
     -webkit-backdrop-filter: blur(6px);
     background-color: rgb(21, 21, 21);
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
     gap: 30px;
