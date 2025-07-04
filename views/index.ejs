@@ -34,6 +34,20 @@
                             <span>New File</span>
                         </button>
                     </a>
+                    <% if (parentId!=null){%>
+                    <form action="/delete/<%-parentId%>" method="post">
+                        <input
+                            type="hidden"
+                            name="path"
+                            value="<%= path.join('/') %>" />
+                        <button class="newfolder" type="submit">
+                            <img
+                                src="/bin.png"
+                                style="width: 20px; height: 20px" />
+                            <span>Delete Folder</span>
+                        </button>
+                    </form>
+                    <%}%>
                 </div>
             </aside>
             <div class="center">
@@ -41,7 +55,10 @@
                 <div id="folderModal" class="modal">
                     <div class="modal-content">
                         <h2>Create New Folder</h2>
-                        <form action="/create-folder" method="POST">
+                        <form
+                            action="/create-folder"
+                            method="POST"
+                            class="foldermodal">
                             <div class="label">
                                 <label for="foldername">Name</label>
                             </div>

@@ -49,6 +49,27 @@ app.get(/^\/folders\/(.*)/, async (req, res) => {
     }
 });
 
+app.post("/delete/:id", async (req, res, next) => {
+    try {
+        const pathString = req.body.path;
+        const pathSegments = pathString.split("/").filter(Boolean);
+
+        // Remove the folder being deleted from the path segments
+        const parentPath = pathSegments.slice(0, -1).join("/");
+
+        await db.deleteFolderRecursive(req.user.id, req.params.id);
+
+        // Redirect to the parent folder
+        const redirectPath = parentPath
+            ? `/folders/${parentPath}`
+            : "/folders/";
+        res.redirect(redirectPath);
+    } catch (err) {
+        console.error("Error deleting folder:", err);
+        res.redirect("/folders/");
+    }
+});
+
 app.post("/create-folder", async (req, res, next) => {
     try {
         await db.createFolder(
@@ -57,7 +78,6 @@ app.post("/create-folder", async (req, res, next) => {
             true,
             req.user.id
         );
-
         // redirect to the original folder path
         const currentPath = req.body.path
             ? `/folders/${req.body.path}`
