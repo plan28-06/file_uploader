@@ -20,9 +20,52 @@ app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (req, res, next) => {
     if (req.user) {
-        res.render("index", { user: req.user });
+        res.redirect("/folders/");
     } else {
         res.redirect("/log-in");
+    }
+});
+
+app.get(/^\/folders\/(.*)/, async (req, res) => {
+    if (!req.user) {
+        return res.redirect("/log-in");
+    }
+
+    const fullPath = req.params[0] || "";
+    const pathSegments = fullPath.split("/").filter(Boolean);
+    const parentId = pathSegments.at(-1) || null;
+
+    try {
+        const content = await db.getFolderContents(req.user.id, pathSegments);
+        res.render("index", {
+            user: req.user,
+            path: pathSegments,
+            content: content,
+            parentId: parentId,
+        });
+    } catch (err) {
+        console.error("Error fetching folder contents:", err);
+        res.status(500).render("500");
+    }
+});
+
+app.post("/create-folder", async (req, res, next) => {
+    try {
+        await db.createFolder(
+            req.body.parentId || null,
+            req.body.folderName,
+            true,
+            req.user.id
+        );
+
+        // redirect to the original folder path
+        const currentPath = req.body.path
+            ? `/folders/${req.body.path}`
+            : "/folders/";
+        res.redirect(currentPath);
+    } catch (err) {
+        console.log(err);
+        res.redirect("/folders"); // fallback
     }
 });
 

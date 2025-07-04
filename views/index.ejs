@@ -37,6 +37,7 @@
                 </div>
             </aside>
             <div class="center">
+                <!-- Folder Modal -->
                 <div id="folderModal" class="modal">
                     <div class="modal-content">
                         <h2>Create New Folder</h2>
@@ -49,14 +50,41 @@
                                 name="folderName"
                                 placeholder="Folder name"
                                 required />
+                            <input
+                                type="hidden"
+                                name="path"
+                                value="<%= path.join('/') %>" />
+                            <input
+                                type="hidden"
+                                name="parentId"
+                                value="<%= parentId %>" />
                             <div class="createbutton">
-                                <a href="/createfolder">
-                                    <button type="submit">Create</button>
-                                </a>
+                                <button type="submit">Create</button>
                             </div>
                         </form>
                     </div>
                 </div>
+                <% if (content.length === 0) { %>
+                <p class="empty-msg">This folder is empty.</p>
+                <% } else { %>
+                <div class="content-grid">
+                    <% content.forEach(item => { %>
+                    <div class="item">
+                        <% if (item.isFolder) { %>
+                        <a href="/folders/<%= [...path, item.id].join('/') %>">
+                            <img src="/folder.svg" alt="Folder" class="icon" />
+                            <p><%= item.name %></p>
+                        </a>
+                        <% } else { %>
+                        <a href="<%= item.url %>" target="_blank">
+                            <img src="/file-icon.png" alt="File" class="icon" />
+                            <p><%= item.name %></p>
+                        </a>
+                        <% } %>
+                    </div>
+                    <% }); %>
+                </div>
+                <% } %>
             </div>
         </main>
     </body>

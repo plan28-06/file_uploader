@@ -13,4 +13,34 @@ async function createUser(username, password) {
     }
 }
 
-module.exports = { createUser };
+async function createFolder(parentId, name, isFolder, userId) {
+    try {
+        await prisma.node.create({
+            data: {
+                parentId,
+                name,
+                isFolder,
+                userId,
+            },
+        });
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function getFolderContents(userId, pathSegments) {
+    const parentId = pathSegments.at(-1) || null;
+    try {
+        return await prisma.node.findMany({
+            where: {
+                parentId,
+                userId,
+            },
+        });
+    } catch (err) {
+        console.error("Error in getFolderContents:", err);
+        return [];
+    }
+}
+
+module.exports = { createUser, getFolderContents, createFolder };
