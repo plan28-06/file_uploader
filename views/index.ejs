@@ -9,8 +9,15 @@
     </head>
     <script>
         window.onclick = (e) => {
-            const modal = document.getElementById("folderModal");
-            if (e.target === modal) modal.style.display = "none";
+            const folderModal = document.getElementById("folderModal");
+            const fileModal = document.getElementById("fileModal");
+
+            if (e.target === folderModal) {
+                folderModal.style.display = "none";
+            }
+            if (e.target === fileModal) {
+                fileModal.style.display = "none";
+            }
         };
     </script>
     <body>
@@ -26,14 +33,14 @@
                             style="width: 20px; height: 20px" />
                         <span>New Folder</span>
                     </button>
-                    <a href="/newfile">
-                        <button class="newfile">
-                            <img
-                                src="/new-file.png"
-                                style="width: 20px; height: 20px" />
-                            <span>New File</span>
-                        </button>
-                    </a>
+                    <button
+                        class="newfile"
+                        onclick="document.getElementById('fileModal').style.display = 'flex'">
+                        <img
+                            src="/new-file.png"
+                            style="width: 20px; height: 20px" />
+                        <span>New File</span>
+                    </button>
                     <% if (parentId!=null){%>
                     <form action="/delete/<%-parentId%>" method="post">
                         <input
@@ -81,6 +88,26 @@
                         </form>
                     </div>
                 </div>
+                <div id="fileModal" class="modal">
+                    <div class="modal-content">
+                        <h2>Create New Folder</h2>
+                        <form action="/upload" method="POST" class="filemodal">
+                            <input type="file" name="filename" required />
+                            <input
+                                type="hidden"
+                                name="path"
+                                value="<%= path.join('/') %>" />
+                            <input
+                                type="hidden"
+                                name="parentId"
+                                value="<%= parentId %>" />
+                            <div class="createbutton">
+                                <button type="submit">Upload</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
                 <% if (content.length === 0) { %>
                 <p class="empty-msg">This folder is empty.</p>
                 <% } else { %>

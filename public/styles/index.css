@@ -163,7 +163,8 @@ a {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.foldermodal {
+.foldermodal,
+.filemodal {
     padding-top: 30px;
     padding-bottom: 15px;
 }

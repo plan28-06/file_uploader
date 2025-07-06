@@ -38,11 +38,9 @@ async function deleteFolderRecursive(userId, folderId) {
                 isFolder: true,
             },
         });
-
         if (!folder) {
             throw new Error("Folder not found or doesn't belong to user");
         }
-
         // Find all child nodes of this folder
         const children = await prisma.node.findMany({
             where: {
@@ -50,7 +48,6 @@ async function deleteFolderRecursive(userId, folderId) {
                 userId: userId,
             },
         });
-
         // Recursively delete children
         for (const child of children) {
             if (child.isFolder) {
@@ -63,7 +60,6 @@ async function deleteFolderRecursive(userId, folderId) {
                 });
             }
         }
-
         // Delete the folder itself
         await prisma.node.delete({
             where: {
