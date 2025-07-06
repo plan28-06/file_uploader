@@ -11,7 +11,6 @@ const cloudinary = require("./cloudinary");
 const fs = require("fs");
 const upload = multer({ dest: "uploads/" }); // temp file storage
 require("./passport.js");
-
 const app = express();
 app.set("views", nodepath.join(__dirname, "views"));
 app.use(express.static("public"));
@@ -53,7 +52,7 @@ app.get(/^\/folders\/(.*)/, async (req, res) => {
     }
 });
 
-app.post("/delete/:id", async (req, res, next) => {
+app.post("/deletefolder/:id", async (req, res, next) => {
     try {
         const pathString = req.body.path;
         const pathSegments = pathString.split("/").filter(Boolean);
@@ -93,11 +92,27 @@ app.post("/create-folder", async (req, res, next) => {
     }
 });
 
+app.post("/delete/:id", async (req, res, next) => {
+    const id = req.params.id;
+    if (!req.user) {
+        res.redirect("/");
+    }
+    try {
+        await db.deleteFile(req.user.id, id);
+        const currentPath = req.body.path
+            ? `/folders/${req.body.path}`
+            : "/folders/";
+        res.redirect(currentPath);
+    } catch (err) {
+        console.log(err);
+        res.redirect("/folders/");
+    }
+});
 app.post("/upload", upload.single("filename"), async (req, res) => {
     try {
         const filePath = req.file.path;
         const { parentId, path } = req.body;
-        const originalName = req.file.originalname; 
+        const originalName = req.file.originalname;
         const baseName = nodepath.parse(originalName).name;
         const result = await cloudinary.uploader.upload(filePath, {
             folder: "file_uploader",
@@ -106,6 +121,9 @@ app.post("/upload", upload.single("filename"), async (req, res) => {
             unique_filename: false,
             public_id: baseName,
         });
+        if (!req.user) {
+            res.redirect("/");
+        }
         fs.unlinkSync(filePath);
         await db.createFile(
             req.user.id,
@@ -119,6 +137,7 @@ app.post("/upload", upload.single("filename"), async (req, res) => {
         console.log(error);
     }
 });
+
 // O-Auth
 app.get(
     "/auth/google",

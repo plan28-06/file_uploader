@@ -103,10 +103,24 @@ async function createFile(userId, name, url, parentId) {
     }
 }
 
+async function deleteFile(userId, fileId) {
+    try {
+        await prisma.node.delete({
+            where: {
+                userId: userId,
+                id: fileId,
+            },
+        });
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     createUser,
     getFolderContents,
     createFolder,
     deleteFolderRecursive,
     createFile,
+    deleteFile,
 };
