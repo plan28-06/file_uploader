@@ -1,4 +1,4 @@
-const path = require("node:path");
+const nodepath = require("node:path");
 const db = require("./db/queries");
 const express = require("express");
 const bcrypt = require("bcrypt");
@@ -6,10 +6,14 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const session = require("express-session");
 const { error } = require("node:console");
+const multer = require("multer");
+const cloudinary = require("./cloudinary");
+const fs = require("fs");
+const upload = multer({ dest: "uploads/" }); // temp file storage
 require("./passport.js");
 
 const app = express();
-app.set("views", path.join(__dirname, "views"));
+app.set("views", nodepath.join(__dirname, "views"));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
@@ -89,6 +93,32 @@ app.post("/create-folder", async (req, res, next) => {
     }
 });
 
+app.post("/upload", upload.single("filename"), async (req, res) => {
+    try {
+        const filePath = req.file.path;
+        const { parentId, path } = req.body;
+        const originalName = req.file.originalname; 
+        const baseName = nodepath.parse(originalName).name;
+        const result = await cloudinary.uploader.upload(filePath, {
+            folder: "file_uploader",
+            resource_type: "auto",
+            use_filename: true,
+            unique_filename: false,
+            public_id: baseName,
+        });
+        fs.unlinkSync(filePath);
+        await db.createFile(
+            req.user.id,
+            req.file.originalname,
+            result.secure_url,
+            parentId
+        );
+        const redirectPath = path ? `/folders/${path}` : "/folders/";
+        res.redirect(redirectPath);
+    } catch (error) {
+        console.log(error);
+    }
+});
 // O-Auth
 app.get(
     "/auth/google",

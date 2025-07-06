@@ -91,7 +91,11 @@
                 <div id="fileModal" class="modal">
                     <div class="modal-content">
                         <h2>Create New Folder</h2>
-                        <form action="/upload" method="POST" class="filemodal">
+                        <form
+                            action="/upload"
+                            method="POST"
+                            enctype="multipart/form-data"
+                            class="filemodal">
                             <input type="file" name="filename" required />
                             <input
                                 type="hidden"
@@ -107,7 +111,6 @@
                         </form>
                     </div>
                 </div>
-
                 <% if (content.length === 0) { %>
                 <p class="empty-msg">This folder is empty.</p>
                 <% } else { %>
@@ -120,10 +123,38 @@
                             <p><%= item.name %></p>
                         </a>
                         <% } else { %>
-                        <a href="<%= item.url %>" target="_blank">
-                            <img src="/file-icon.png" alt="File" class="icon" />
-                            <p><%= item.name %></p>
-                        </a>
+                        <div class="file-wrapper">
+                            <div class="file-info">
+                                <img
+                                    src="/new-file.png"
+                                    alt="File"
+                                    class="icon" />
+                                <p><%= item.name %></p>
+                            </div>
+                            <div class="file-actions">
+                                <form
+                                    action="/delete/<%= item.id %>"
+                                    method="POST"
+                                    style="display: inline">
+                                    <input
+                                        type="hidden"
+                                        name="path"
+                                        value="<%= path.join('/') %>" />
+                                    <button
+                                        class="file-btn delete-btn"
+                                        type="submit">
+                                        Delete
+                                    </button>
+                                </form>
+                                <a
+                                    href="<%= item.url %>"
+                                    download="<%= item.name %>"
+                                    target="_blank"
+                                    class="file-btn download-btn"
+                                    >Download</a
+                                >
+                            </div>
+                        </div>
                         <% } %>
                     </div>
                     <% }); %>

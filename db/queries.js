@@ -87,9 +87,26 @@ async function getFolderContents(userId, pathSegments) {
     }
 }
 
+async function createFile(userId, name, url, parentId) {
+    try {
+        await prisma.node.create({
+            data: {
+                userId: userId,
+                name: name,
+                isFolder: false,
+                parentId: parentId || null,
+                url: url,
+            },
+        });
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     createUser,
     getFolderContents,
     createFolder,
     deleteFolderRecursive,
+    createFile,
 };
