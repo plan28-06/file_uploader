@@ -295,7 +295,7 @@ header {
 .file-btn {
     padding: 5px 5px;
     width: fit-content;
-    
+
     font-size: 0.85rem;
     border: none;
     border-radius: 5px;
@@ -319,4 +319,42 @@ header {
 
 .download-btn:hover {
     background-color: #00cc00;
+}
+
+@media screen and (max-width: 1000px) {
+    main {
+        grid-template-columns: auto;
+        grid-template-rows: min-content 1fr;
+    }
+    aside {
+        width: 100vw;
+        border-right: none;
+        border-bottom: 2px solid white ;
+    }
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    input {
+        width: 100%;
+    }
+    .content-grid {
+        grid-template-columns: 1fr;
+        justify-items: center; /* horizontal centering */
+        align-items: center; /* vertical centering */
+    }
+    .item {
+        width: 60%;
+    }
+    .modal-content{
+        width: 80%;
+    }
+
+    .file-actions{
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 }
