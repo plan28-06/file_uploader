@@ -119,7 +119,7 @@ app.post("/upload", upload.single("filename"), async (req, res) => {
             resource_type: "raw",
             use_filename: true,
             unique_filename: false,
-            public_id: baseName,
+            public_id: originalName,
         });
         if (!req.user) {
             res.redirect("/");
