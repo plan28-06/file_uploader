@@ -114,12 +114,13 @@ app.post("/upload", upload.single("filename"), async (req, res) => {
         const { parentId, path } = req.body;
         const originalName = req.file.originalname;
         const baseName = nodepath.parse(originalName).name;
+        const parsed = nodepath.parse(req.file.originalname); 
         const result = await cloudinary.uploader.upload(filePath, {
             folder: "file_uploader",
             resource_type: "raw",
             use_filename: true,
             unique_filename: false,
-            public_id: originalName,
+            public_id: parsed.name,
         });
         if (!req.user) {
             res.redirect("/");
