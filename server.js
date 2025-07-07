@@ -116,7 +116,7 @@ app.post("/upload", upload.single("filename"), async (req, res) => {
         const baseName = nodepath.parse(originalName).name;
         const result = await cloudinary.uploader.upload(filePath, {
             folder: "file_uploader",
-            resource_type: "auto",
+            resource_type: "raw",
             use_filename: true,
             unique_filename: false,
             public_id: baseName,
