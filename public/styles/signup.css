@@ -4,6 +4,10 @@ main {
     align-items: center;
 }
 
+html {
+    background: rgb(21, 21, 21);
+}
+
 body {
     min-height: 100dvh;
     display: grid;
@@ -19,7 +23,7 @@ body {
     width: 100%;
     color: white;
     height: auto;
-    background: linear-gradient(50deg, #0f172a, #0a0a0a);
+    background: rgb(21, 21, 21);
 }
 
 .formusername,
@@ -49,7 +53,7 @@ form {
 }
 
 .main-button-2 {
-    background-color: white;
+    background-color: rgb(21, 21, 21);
     padding: 6px 12px 6px 12px;
     border: none;
     border-radius: 5px;
@@ -57,9 +61,11 @@ form {
     text-align: center;
     transition: opacity 200ms;
     font-size: 24px;
-    color: #0a0a0a;
+    color: white;
     font-weight: 600;
 }
 
-
-
+.main-button-2:hover {
+    color: hsl(203, 78%, 50%);
+    cursor: pointer;
+}
